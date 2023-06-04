@@ -4,12 +4,12 @@ from multiprocessing.pool import ThreadPool
 import sntp_package
 
 
-def answer_to_client(sock, address, data, delay):
+def answer_to_client(sock: socket, address: tuple, data: bytes, delay: int) -> None:
     answer = sntp_package.get_new_package(data, sntp_package.get_bytes(delay), delay)
     sock.sendto(answer + sntp_package.get_bytes(delay), address)
 
 
-def run_server(host, port, delay):
+def run_server(host: str, port: int, delay: int) -> None:
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
         sock.bind((host, port))
         print("Server is running!")
